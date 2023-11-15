@@ -1,6 +1,6 @@
 /home/luca/.local/share/JetBrains/Toolbox/apps/clion-nova/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/luca/.local/share/JetBrains/Toolbox/apps/clion-nova/bin/ninja/linux/x64/ninja -G Ninja -S /home/luca/dev/wayland_multi_window/linux -B /home/luca/dev/wayland_multi_window/linux/cmake-build-debug
-CMake Error at CMakeLists.txt:21 (pkg_check_modules):
-  Unknown CMake command "pkg_check_modules".
+CMake Error at CMakeLists.txt:17 (apply_standard_settings):
+  Unknown CMake command "apply_standard_settings".
 
 
 -- Configuring incomplete, errors occurred!

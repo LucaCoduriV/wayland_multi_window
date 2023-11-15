@@ -26,11 +26,15 @@ class FlutterWindowCallback {
 class FlutterWindow : public BaseFlutterWindow {
 
  public:
-
+  FlutterWindow() = default;
   FlutterWindow(int64_t id, const std::string &args, const std::shared_ptr<FlutterWindowCallback> &callback);
   ~FlutterWindow() override;
 
   WindowChannel *GetWindowChannel() override;
+
+  // Should not be public but I am lazy
+  std::weak_ptr<FlutterWindowCallback> callback_;
+  int64_t id_;
 
  protected:
 
@@ -38,13 +42,12 @@ class FlutterWindow : public BaseFlutterWindow {
     return GTK_WINDOW(window_);
   }
 
- private:
-
-  std::weak_ptr<FlutterWindowCallback> callback_;
-
-  int64_t id_;
-
   GtkWidget *window_ = nullptr;
+
+
+
+
+
 
   std::unique_ptr<WindowChannel> window_channel_;
 

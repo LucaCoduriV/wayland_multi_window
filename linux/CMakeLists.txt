@@ -11,7 +11,9 @@ add_library(${PLUGIN_NAME} SHARED
   "multi_window_manager.cc"
   "flutter_window.cc"
   "base_flutter_window.cc"
-  "window_channel.cc")
+  "window_channel.cc"
+  "layer_surface.cpp"
+  "layer_surface.h")
 apply_standard_settings(${PLUGIN_NAME})
 set_target_properties(${PLUGIN_NAME} PROPERTIES
   CXX_VISIBILITY_PRESET hidden)
@@ -23,6 +25,7 @@ target_include_directories(${PLUGIN_NAME} INTERFACE
   "${CMAKE_CURRENT_SOURCE_DIR}/include")
 target_link_libraries(${PLUGIN_NAME} PRIVATE flutter)
 target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GTK)
+target_link_libraries(${PLUGIN_NAME} PRIVATE PkgConfig::GLS)
 
 # List of absolute paths to libraries that should be bundled with the plugin
 set(wayland_multi_window_bundled_libraries
