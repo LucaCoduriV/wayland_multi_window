@@ -33,6 +33,7 @@ LayerSurface::LayerSurface(
     id_ = id;
 
     window_ = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_layer_init_for_window(GTK_WINDOW(window_));
     gtk_window_set_default_size(GTK_WINDOW(window_), 1280, 720);
     gtk_window_set_title(GTK_WINDOW(window_), "");
     gtk_window_set_position(GTK_WINDOW(window_), GTK_WIN_POS_CENTER);

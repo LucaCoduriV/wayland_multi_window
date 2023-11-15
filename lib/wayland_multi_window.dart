@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 import 'src/channels.dart';
+import 'src/layer_shell_controller.dart';
+import 'src/layer_shell_controller_impl.dart';
 import 'src/window_controller.dart';
 import 'src/window_controller_impl.dart';
 
 export 'src/window_controller.dart';
+export 'src/layer_shell_controller.dart';
 
 class WaylandMultiWindow {
   /// Create a new Window.
@@ -34,6 +37,33 @@ class WaylandMultiWindow {
     assert(windowId != null, 'windowId is null');
     assert(windowId! > 0, 'id must be greater than 0');
     return WindowControllerMainImpl(windowId!);
+  }
+
+  /// Create a new LayerShell.
+  ///
+  /// The new window instance will call `main` method in your `main.dart` file in
+  /// new flutter engine instance with some addiotonal arguments.
+  /// the arguments of `main` method is a fixed length list.
+  /// ---------------------------------------------------------
+  /// | index |   Type   |        description                 |
+  /// |-------|----------| -----------------------------------|
+  /// | 0     | `String` | the value always is "multi_window".|
+  /// | 1     | `int`    | the id of the window.              |
+  /// | 2     | `String` | the [arguments] of the window.     |
+  /// ---------------------------------------------------------
+  ///
+  /// You can use [WindowController] to control the window.
+  ///
+  /// NOTE: [createWindow] will only create a new window, you need to call
+  /// [WindowController.show] to show the window.
+  static Future<LayerShellController> createLayerShell([String? arguments]) async {
+    final windowId = await multiWindowChannel.invokeMethod<int>(
+      'createLayerShell',
+      arguments,
+    );
+    assert(windowId != null, 'windowId is null');
+    assert(windowId! > 0, 'id must be greater than 0');
+    return LayerShellControllerMainImpl(windowId!);
   }
 
   /// Invoke method on the isolate of the window.

@@ -70,7 +70,91 @@ static void wayland_multi_window_plugin_handle_method_call(
     auto window_ids = MultiWindowManager::Instance()->GetAllSubWindowIds();
     response = FL_METHOD_RESPONSE(fl_method_success_response_new(
         fl_value_new_int64_list(window_ids.data(), window_ids.size())));
-  } else {
+  } else if (strcmp(method, "setLayerSize") == 0) {
+        auto *args = fl_method_call_get_args(method_call);
+        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+        auto height = fl_value_get_float(fl_value_lookup_string(args, "height"));
+        auto width = fl_value_get_float(fl_value_lookup_string(args, "width"));
+        MultiWindowManager::Instance()->SetLayerShellSize(window_id, width, height);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    } else if (strcmp(method, "autoExclusiveZoneIsEnabled") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(args);
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "enableAutoExclusiveZone") == 0) {
+        auto *args = fl_method_call_get_args(method_call);
+        auto window_id = fl_value_get_int(args);
+        MultiWindowManager::Instance()->EnableAutoExclusiveZone(window_id);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    } else if (strcmp(method, "getAnchor") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+//        auto edge = fl_value_get_string(fl_value_lookup_string(args, "edge"));
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "getExclusiveZone") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(args);
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "getKeyboardInteractivity") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(args);
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "getKeyboardMode") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(args);
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "getLayer") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(args);
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "getMargin") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+//        auto edge = fl_value_get_string(fl_value_lookup_string(args, "edge"));
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "setAnchor") == 0) {
+        auto *args = fl_method_call_get_args(method_call);
+        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+        auto edge = fl_value_get_string(fl_value_lookup_string(args, "edge"));
+        auto anchor = fl_value_get_bool(fl_value_lookup_string(args, "anchor"));
+        MultiWindowManager::Instance()->SetLayerShellAnchor(window_id, edge, anchor);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+
+    } else if (strcmp(method, "setExclusiveZone") == 0) {
+        auto *args = fl_method_call_get_args(method_call);
+        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+        auto size = fl_value_get_int(fl_value_lookup_string(args, "size"));
+        MultiWindowManager::Instance()->SetLayerShellExclusiveZone(window_id, size);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    } else if (strcmp(method, "setKeyboardInteractivity") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+//        auto interactivity = fl_value_get_bool(fl_value_lookup_string(args, "interactivity"));
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "setKeyboardMode") == 0) {
+//        auto *args = fl_method_call_get_args(method_call);
+//        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+//        auto mode = fl_value_get_string(fl_value_lookup_string(args, "mode"));
+        response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
+    } else if (strcmp(method, "setLayer") == 0) {
+        auto *args = fl_method_call_get_args(method_call);
+        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+        auto layer = fl_value_get_string(fl_value_lookup_string(args, "layer"));
+        MultiWindowManager::Instance()->SetLayerShellLayer(window_id, layer);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    } else if (strcmp(method, "setMargin") == 0) {
+        auto *args = fl_method_call_get_args(method_call);
+        auto window_id = fl_value_get_int(fl_value_lookup_string(args, "windowId"));
+        auto edge = fl_value_get_string(fl_value_lookup_string(args, "edge"));
+        auto margin = fl_value_get_int(fl_value_lookup_string(args, "margin"));
+        MultiWindowManager::Instance()->SetLayerShellMargin(window_id, edge, margin);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(nullptr));
+    }else if (strcmp(method, "createLayerShell") == 0) {
+        auto *args = fl_method_call_get_args(method_call);
+        auto *arguments = fl_value_get_string(args);
+        auto window = MultiWindowManager::Instance()->CreateLayerShell(arguments);
+        response = FL_METHOD_RESPONSE(fl_method_success_response_new(fl_value_new_int(window)));
+    } else {
     response = FL_METHOD_RESPONSE(fl_method_not_implemented_response_new());
   }
 
