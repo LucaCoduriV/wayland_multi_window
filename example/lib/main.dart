@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:desktop_lifecycle/desktop_lifecycle.dart';
-import 'package:wayland_multi_window/desktop_multi_window.dart';
+import 'package:wayland_multi_window/wayland_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_window_example/event_widget.dart';
 
@@ -41,7 +41,7 @@ class _ExampleMainWindowState extends State<_ExampleMainWindow> {
             TextButton(
               onPressed: () async {
                 final window =
-                    await DesktopMultiWindow.createWindow(jsonEncode({
+                    await WaylandMultiWindow.createWindow(jsonEncode({
                   'args1': 'Sub window',
                   'args2': 100,
                   'args3': true,
@@ -59,9 +59,9 @@ class _ExampleMainWindowState extends State<_ExampleMainWindow> {
               child: const Text('Send event to all sub windows'),
               onPressed: () async {
                 final subWindowIds =
-                    await DesktopMultiWindow.getAllSubWindowIds();
+                    await WaylandMultiWindow.getAllSubWindowIds();
                 for (final windowId in subWindowIds) {
-                  DesktopMultiWindow.invokeMethod(
+                  WaylandMultiWindow.invokeMethod(
                     windowId,
                     'broadcast',
                     'Broadcast from main window',
