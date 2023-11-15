@@ -45,6 +45,14 @@ class MultiWindowManager : public std::enable_shared_from_this<MultiWindowManage
 
   void OnWindowDestroy(int64_t id) override;
 
+  int64_t CreateLayerShell(const std::string &args);
+  void SetLayerShellAnchor(int64_t id, const std::string &edge, bool anchor);
+  void EnableAutoExclusiveZone(int64_t id);
+  void SetLayerShellMargin(int64_t id, const std::string &edge, int margin);
+  void SetLayerShellLayer(int64_t id, const std::string &layerSurface);
+  void SetLayerShellExclusiveZone(int64_t id, int zone);
+  void SetLayerShellSize(int64_t id, int width, int height);
+
  private:
 
   std::map<int64_t, std::unique_ptr<BaseFlutterWindow>> windows_;

@@ -3,6 +3,7 @@
 //
 
 #include "multi_window_manager.h"
+#include "layer_surface.h"
 
 namespace {
 int64_t g_next_id_ = 0;
@@ -150,3 +151,67 @@ void MultiWindowManager::OnWindowDestroy(int64_t id) {
   windows_.erase(id);
 }
 
+// ----------------------- LAYER SHELL -----------------------
+
+int64_t MultiWindowManager::CreateLayerShell(const std::string &args) {
+    g_next_id_++;
+    int64_t id = g_next_id_;
+    auto window = std::make_unique<LayerSurface>(id, args, shared_from_this());
+    window->GetWindowChannel()->SetMethodHandler([this](int64_t from_window_id,
+                                                        int64_t target_window_id,
+                                                        const gchar *method,
+                                                        FlValue *arguments,
+                                                        FlMethodCall *method_call) {
+        HandleMethodCall(from_window_id, target_window_id, method, arguments, method_call);
+    });
+    windows_[id] = std::move(window);
+    return id;
+}
+
+void MultiWindowManager::SetLayerShellAnchor(int64_t id, const std::string& edge, bool anchor) {
+    auto window = windows_.find(id);
+    if (window != windows_.end()) {
+        auto layer = dynamic_cast<LayerSurface *>(window->second.get());
+        layer->setAnchor(edge, anchor);
+    }
+}
+
+void MultiWindowManager::EnableAutoExclusiveZone(int64_t id) {
+    auto window = windows_.find(id);
+    if (window != windows_.end()) {
+        auto layer = dynamic_cast<LayerSurface *>(window->second.get());
+        layer->enableAutoExclusiveZone();
+    }
+}
+
+void MultiWindowManager::SetLayerShellMargin(int64_t id, const std::string &edge, int margin){
+    auto window = windows_.find(id);
+    if (window != windows_.end()) {
+        auto layer = dynamic_cast<LayerSurface *>(window->second.get());
+        layer->setMargin(edge, margin);
+    }
+}
+
+void MultiWindowManager::SetLayerShellLayer(int64_t id, const std::string &layerSurface) {
+    auto window = windows_.find(id);
+    if (window != windows_.end()) {
+        auto layer = dynamic_cast<LayerSurface *>(window->second.get());
+        layer->setLayer(layerSurface);
+    }
+}
+
+void MultiWindowManager::SetLayerShellExclusiveZone(int64_t id, int zone) {
+    auto window = windows_.find(id);
+    if (window != windows_.end()) {
+        auto layer = dynamic_cast<LayerSurface  *>(window->second.get());
+        layer->setExclusiveZone(zone);
+    }
+}
+
+void MultiWindowManager::SetLayerShellSize(int64_t id, int width, int height) {
+    auto window = windows_.find(id);
+    if (window != windows_.end()) {
+        auto layer = dynamic_cast<LayerSurface *>(window->second.get());
+        layer->setSize(width, height);
+    }
+}
