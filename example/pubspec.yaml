@@ -18,7 +18,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  desktop_multi_window:
+  wayland_multi_window:
     # When depending on this package from a real application you should use:
     #   flutter_multi_window: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints

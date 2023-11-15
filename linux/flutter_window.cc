@@ -6,8 +6,8 @@
 
 #include <iostream>
 
-#include "include/desktop_multi_window/desktop_multi_window_plugin.h"
-#include "desktop_multi_window_plugin_internal.h"
+#include "include/wayland_multi_window/wayland_multi_window_plugin.h"
+#include "wayland_multi_window_plugin_internal.h"
 
 namespace {
 
@@ -53,11 +53,11 @@ FlutterWindow::FlutterWindow(
     _g_window_created_callback(FL_PLUGIN_REGISTRY(fl_view));
   }
   g_autoptr(FlPluginRegistrar)
-      desktop_multi_window_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(FL_PLUGIN_REGISTRY(fl_view), "DesktopMultiWindowPlugin");
-  desktop_multi_window_plugin_register_with_registrar_internal(desktop_multi_window_registrar);
+      wayland_multi_window_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(FL_PLUGIN_REGISTRY(fl_view), "WaylandMultiWindowPlugin");
+  wayland_multi_window_plugin_register_with_registrar_internal(wayland_multi_window_registrar);
 
-  window_channel_ = WindowChannel::RegisterWithRegistrar(desktop_multi_window_registrar, id_);
+  window_channel_ = WindowChannel::RegisterWithRegistrar(wayland_multi_window_registrar, id_);
 
   gtk_widget_grab_focus(GTK_WIDGET(fl_view));
   gtk_widget_hide(GTK_WIDGET(window_));
@@ -69,6 +69,6 @@ WindowChannel *FlutterWindow::GetWindowChannel() {
 
 FlutterWindow::~FlutterWindow() = default;
 
-void desktop_multi_window_plugin_set_window_created_callback(WindowCreatedCallback callback) {
+void wayland_multi_window_plugin_set_window_created_callback(WindowCreatedCallback callback) {
   _g_window_created_callback = callback;
 }

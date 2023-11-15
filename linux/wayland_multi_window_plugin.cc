@@ -1,4 +1,4 @@
-#include "include/desktop_multi_window/desktop_multi_window_plugin.h"
+#include "include/wayland_multi_window/wayland_multi_window_plugin.h"
 
 #include <flutter_linux/flutter_linux.h>
 #include <gtk/gtk.h>
@@ -6,21 +6,21 @@
 #include <cstring>
 
 #include "multi_window_manager.h"
-#include "desktop_multi_window_plugin_internal.h"
+#include "wayland_multi_window_plugin_internal.h"
 
-#define DESKTOP_MULTI_WINDOW_PLUGIN(obj) \
-  (G_TYPE_CHECK_INSTANCE_CAST((obj), desktop_multi_window_plugin_get_type(), \
-                              DesktopMultiWindowPlugin))
+#define WAYLAND_MULTI_WINDOW_PLUGIN(obj) \
+  (G_TYPE_CHECK_INSTANCE_CAST((obj), wayland_multi_window_plugin_get_type(), \
+                              WaylandMultiWindowPlugin))
 
-struct _DesktopMultiWindowPlugin {
+struct _WaylandMultiWindowPlugin {
   GObject parent_instance;
 };
 
-G_DEFINE_TYPE(DesktopMultiWindowPlugin, desktop_multi_window_plugin, g_object_get_type())
+G_DEFINE_TYPE(WaylandMultiWindowPlugin, wayland_multi_window_plugin, g_object_get_type())
 
 // Called when a method call is received from Flutter.
-static void desktop_multi_window_plugin_handle_method_call(
-    DesktopMultiWindowPlugin *self,
+static void wayland_multi_window_plugin_handle_method_call(
+    WaylandMultiWindowPlugin *self,
     FlMethodCall *method_call) {
   g_autoptr(FlMethodResponse) response;
 
@@ -77,25 +77,25 @@ static void desktop_multi_window_plugin_handle_method_call(
   fl_method_call_respond(method_call, response, nullptr);
 }
 
-static void desktop_multi_window_plugin_dispose(GObject *object) {
-  G_OBJECT_CLASS(desktop_multi_window_plugin_parent_class)->dispose(object);
+static void wayland_multi_window_plugin_dispose(GObject *object) {
+  G_OBJECT_CLASS(wayland_multi_window_plugin_parent_class)->dispose(object);
 }
 
-static void desktop_multi_window_plugin_class_init(DesktopMultiWindowPluginClass *klass) {
-  G_OBJECT_CLASS(klass)->dispose = desktop_multi_window_plugin_dispose;
+static void wayland_multi_window_plugin_class_init(WaylandMultiWindowPluginClass *klass) {
+  G_OBJECT_CLASS(klass)->dispose = wayland_multi_window_plugin_dispose;
 }
 
-static void desktop_multi_window_plugin_init(DesktopMultiWindowPlugin *self) {}
+static void wayland_multi_window_plugin_init(WaylandMultiWindowPlugin *self) {}
 
 static void method_call_cb(FlMethodChannel *channel, FlMethodCall *method_call,
                            gpointer user_data) {
-  DesktopMultiWindowPlugin *plugin = DESKTOP_MULTI_WINDOW_PLUGIN(user_data);
-  desktop_multi_window_plugin_handle_method_call(plugin, method_call);
+  WaylandMultiWindowPlugin *plugin = WAYLAND_MULTI_WINDOW_PLUGIN(user_data);
+  wayland_multi_window_plugin_handle_method_call(plugin, method_call);
 }
 
-void desktop_multi_window_plugin_register_with_registrar_internal(FlPluginRegistrar *registrar) {
-  DesktopMultiWindowPlugin *plugin = DESKTOP_MULTI_WINDOW_PLUGIN(
-      g_object_new(desktop_multi_window_plugin_get_type(), nullptr));
+void wayland_multi_window_plugin_register_with_registrar_internal(FlPluginRegistrar *registrar) {
+  WaylandMultiWindowPlugin *plugin = WAYLAND_MULTI_WINDOW_PLUGIN(
+      g_object_new(wayland_multi_window_plugin_get_type(), nullptr));
 
   g_autoptr(FlStandardMethodCodec) codec = fl_standard_method_codec_new();
   g_autoptr(FlMethodChannel) channel =
@@ -109,8 +109,8 @@ void desktop_multi_window_plugin_register_with_registrar_internal(FlPluginRegist
   g_object_unref(plugin);
 }
 
-void desktop_multi_window_plugin_register_with_registrar(FlPluginRegistrar *registrar) {
-  desktop_multi_window_plugin_register_with_registrar_internal(registrar);
+void wayland_multi_window_plugin_register_with_registrar(FlPluginRegistrar *registrar) {
+  wayland_multi_window_plugin_register_with_registrar_internal(registrar);
   auto view = fl_plugin_registrar_get_view(registrar);
   auto window = gtk_widget_get_toplevel(GTK_WIDGET(view));
   if (GTK_IS_WINDOW(window)) {

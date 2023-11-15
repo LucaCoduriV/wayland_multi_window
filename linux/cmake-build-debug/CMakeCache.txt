@@ -122,7 +122,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=desktop_multi_window
+CMAKE_PROJECT_NAME:STATIC=wayland_multi_window
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -197,6 +197,15 @@ desktop_multi_window_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 desktop_multi_window_SOURCE_DIR:STATIC=/home/luca/dev/wayland_multi_window/linux
+
+//Value Computed by CMake
+wayland_multi_window_BINARY_DIR:STATIC=/home/luca/dev/wayland_multi_window/linux/cmake-build-debug
+
+//Value Computed by CMake
+wayland_multi_window_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+wayland_multi_window_SOURCE_DIR:STATIC=/home/luca/dev/wayland_multi_window/linux
 
 
 ########################

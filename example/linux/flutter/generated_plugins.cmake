@@ -4,7 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_lifecycle
-  desktop_multi_window
+  wayland_multi_window
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

@@ -2,8 +2,8 @@
 // Created by yangbin on 2022/1/11.
 //
 
-#ifndef DESKTOP_MULTI_WINDOW_WINDOWS_MULTI_WINDOW_MANAGER_H_
-#define DESKTOP_MULTI_WINDOW_WINDOWS_MULTI_WINDOW_MANAGER_H_
+#ifndef WAYLAND_MULTI_WINDOW_WINDOWS_MULTI_WINDOW_MANAGER_H_
+#define WAYLAND_MULTI_WINDOW_WINDOWS_MULTI_WINDOW_MANAGER_H_
 
 #include <cstdint>
 #include <string>
@@ -58,4 +58,4 @@ class MultiWindowManager : public std::enable_shared_from_this<MultiWindowManage
 
 };
 
-#endif //DESKTOP_MULTI_WINDOW_WINDOWS_MULTI_WINDOW_MANAGER_H_
+#endif //WAYLAND_MULTI_WINDOW_WINDOWS_MULTI_WINDOW_MANAGER_H_

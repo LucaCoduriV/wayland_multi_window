@@ -1,4 +1,4 @@
-import 'package:desktop_multi_window/desktop_multi_window.dart';
+import 'package:wayland_multi_window/desktop_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

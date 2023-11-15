@@ -1,5 +1,5 @@
-name: desktop_multi_window
-description: A flutter plugin that create and manager multi window in desktop.
+name: wayland_multi_window
+description: A flutter plugin that create and manager multi window in wayland.
 version: 0.2.0
 homepage: https://github.com/MixinNetwork/flutter-plugins/tree/main/packages/desktop_multi_window
 
@@ -20,9 +20,5 @@ dev_dependencies:
 flutter:
   plugin:
     platforms:
-      macos:
-        pluginClass: FlutterMultiWindowPlugin
-      windows:
-        pluginClass: DesktopMultiWindowPlugin
       linux:
-        pluginClass: DesktopMultiWindowPlugin
+        pluginClass: WaylandMultiWindowPlugin
