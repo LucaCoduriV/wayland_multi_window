@@ -2,24 +2,18 @@
 
 [![Pub](https://img.shields.io/pub/v/desktop_multi_window.svg)](https://pub.dev/packages/desktop_multi_window)
 
-A flutter plugin that create and manager multi window in desktop.
-
-|         |     | 
-|---------|-----|
-| Windows | ✅   | 
-| Linux   | ✅   |  
-| macOS   | ✅   | 
+A flutter plugin that create and manage multi window in wayland.
 
 ## Usage
 
-To use this plugin, add `desktop_multi_window` as a dependency in your pubspec.yaml file.
+To use this plugin, add `wayland_multi_window` as a dependency in your pubspec.yaml file.
 
 ## Example
 
 ### Create and Show another window.
 
 ```
-final window = await DesktopMultiWindow.createWindow(jsonEncode({
+final window = await WaylandMultiWindow.createWindow(jsonEncode({
   'args1': 'Sub window',
   'args2': 100,
   'args3': true,
@@ -34,11 +28,11 @@ window
 
 ### Invoke remote window method.
 
-The windows run on different flutter engine. So we need use `DesktopMultiWindow.invokeMethod`
-and `DesktopMultiWindow.invokeMethod` to handle method calls between windows.
+The windows run on different flutter engine. So we need use `WaylandMultiWindow.invokeMethod`
+and `WaylandMultiWindow.invokeMethod` to handle method calls between windows.
 
 ```
-DesktopMultiWindow.setMethodCallHandler((call, fromWindowId) async {
+WaylandMultiWindow.setMethodCallHandler((call, fromWindowId) async {
   debugPrint('${call.method} ${call.arguments} $fromWindowId');
   return "result";
 });
