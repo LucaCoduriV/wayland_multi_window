@@ -21,7 +21,14 @@ namespace {
     WindowCreatedCallback _g_window_created_callback;
 }
 
-//extern gboolean DrawCallback(GtkWidget* widget, cairo_t* cr, gpointer data);
+gboolean DrawCallback(GtkWidget* widget, cairo_t* cr, gpointer data) {
+  cairo_save(cr);
+  cairo_set_source_rgba(cr, 0.0, 0.0, 0.0, 0.0);
+  cairo_set_operator(cr, CAIRO_OPERATOR_SOURCE);
+  cairo_paint(cr);
+  cairo_restore(cr);
+  return FALSE;
+}
 
 LayerSurface::LayerSurface(
         int64_t id,
@@ -37,6 +44,10 @@ LayerSurface::LayerSurface(
     gtk_window_set_default_size(GTK_WINDOW(window_), 1280, 720);
     gtk_window_set_title(GTK_WINDOW(window_), "");
     gtk_window_set_position(GTK_WINDOW(window_), GTK_WIN_POS_CENTER);
+
+    gtk_widget_set_app_paintable(GTK_WIDGET(window_), TRUE);
+    g_signal_connect(G_OBJECT(window_), "draw", G_CALLBACK(DrawCallback), this);
+
     gtk_widget_show(GTK_WIDGET(window_));
 
     g_signal_connect(window_, "destroy", G_CALLBACK(+[](GtkWidget *, gpointer arg) {
@@ -65,6 +76,7 @@ LayerSurface::LayerSurface(
     wayland_multi_window_plugin_register_with_registrar_internal(wayland_multi_window_registrar);
 
     window_channel_ = WindowChannel::RegisterWithRegistrar(wayland_multi_window_registrar, id_);
+
 
     gtk_widget_grab_focus(GTK_WIDGET(fl_view));
     gtk_widget_hide(GTK_WIDGET(window_));

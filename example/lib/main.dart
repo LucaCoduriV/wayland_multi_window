@@ -41,16 +41,16 @@ class _ExampleMainWindowState extends State<_ExampleMainWindow> {
             TextButton(
               onPressed: () async {
                 final window =
-                    await WaylandMultiWindow.createWindow(jsonEncode({
+                    await WaylandMultiWindow.createLayerShell(jsonEncode({
                   'args1': 'Sub window',
                   'args2': 100,
                   'args3': true,
                   'business': 'business_test',
                 }));
                 window
-                  ..setFrame(const Offset(0, 0) & const Size(1280, 720))
-                  ..center()
                   ..setTitle('Another window')
+                  ..setLayer(LayerSurface.top)
+                  ..setLayerSize(Size(800,800))
                   ..show();
               },
               child: const Text('Create a new World!'),
@@ -93,6 +93,7 @@ class _ExampleSubWindow extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
